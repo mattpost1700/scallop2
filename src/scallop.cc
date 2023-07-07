@@ -41,10 +41,10 @@ int scallop::assemble()
 {
 	int c = classify();
 
-	gr.print_weights();
-	hs.print();
+	// gr.print_weights();
+	// hs.print();
 
-	if(verbose >= 1) printf("process splice graph %s type = %d, vertices = %lu, edges = %lu, phasing paths = %lu\n", gr.gid.c_str(), c, gr.num_vertices(), gr.num_edges(), hs.edges.size());
+	// if(verbose >= 1) printf("process splice graph %s type = %d, vertices = %lu, edges = %lu, phasing paths = %lu\n", gr.gid.c_str(), c, gr.num_vertices(), gr.num_edges(), hs.edges.size());
 
 	//resolve_negligible_edges(false, max_decompose_error_ratio[NEGLIGIBLE_EDGE]);
 

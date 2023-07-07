@@ -44,6 +44,7 @@ const vector<int> & fcluster::get_vlist() const
 
 int fcluster::print(int index) const
 {
+	return 0;
 	printf("fcluster %d: type = %d, #fragments = %lu, #phase = %lu, ", index, type, fset.size(), phase.size());
 
 	printf("  v1 = ( ");

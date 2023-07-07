@@ -1324,6 +1324,7 @@ int bundle::count_junctions() const
 
 int bundle::print(int index)
 {
+	return 0;
 	printf("Bundle %d: ", index);
 
 	// statistic xs
