@@ -5,6 +5,7 @@ See LICENSE for licensing.
 */
 
 #include "fcluster.h"
+#include "config.h"
 #include "util.h"
 #include <cstdio>
 
@@ -44,20 +45,21 @@ const vector<int> & fcluster::get_vlist() const
 
 int fcluster::print(int index) const
 {
-	return 0;
-	printf("fcluster %d: type = %d, #fragments = %lu, #phase = %lu, ", index, type, fset.size(), phase.size());
+	if(print_output == true) {
+		printf("fcluster %d: type = %d, #fragments = %lu, #phase = %lu, ", index, type, fset.size(), phase.size());
 
-	printf("  v1 = ( ");
-	printv(v1);
-	printf("), v2 = ( ");
-	printv(v2);
-	printf(")\n");
-
-	for(int k = 0; k < phase.size(); k++)
-	{
-		printf("  count = %d, phase %d = (", count[k], k);
-		printv(phase[k]);
+		printf("  v1 = ( ");
+		printv(v1);
+		printf("), v2 = ( ");
+		printv(v2);
 		printf(")\n");
+
+		for(int k = 0; k < phase.size(); k++)
+		{
+			printf("  count = %d, phase %d = (", count[k], k);
+			printv(phase[k]);
+			printf(")\n");
+		}
 	}
 
 	return 0;

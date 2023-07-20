@@ -74,17 +74,18 @@ int bridger::bridge()
 	double r4 = n4 * 100.0 / n;
 
 	vector<int> ct = get_bridged_fragments_type();	// ct<ct1, ct2, ct3> paired-end, UMI-linked, both
-	// printf("#fragments = %d, #fixed = %d -> %d -> %d -> %d, ratio = %.2lf -> %.2lf -> %.2lf -> %.2lf, #remain = %d, length = (%d, %d, %d), total paired-end = %d, UMI-linked only = %d, intersection: %d, bridged paired-end = %d, UMI-linked only = %d, intersection: %d\n", 
-	// 		n, n1, n2, n3, n4, r1, r2, r3, r4, n - n4, length_low, length_median, length_high, ct[3], ct[4], ct[5], ct[0], ct[1], ct[2]);
+	if(print_output == true) {
+		printf("#fragments = %d, #fixed = %d -> %d -> %d -> %d, ratio = %.2lf -> %.2lf -> %.2lf -> %.2lf, #remain = %d, length = (%d, %d, %d), total paired-end = %d, UMI-linked only = %d, intersection: %d, bridged paired-end = %d, UMI-linked only = %d, intersection: %d\n", 
+				n, n1, n2, n3, n4, r1, r2, r3, r4, n - n4, length_low, length_median, length_high, ct[3], ct[4], ct[5], ct[0], ct[1], ct[2]);
 
-	/*
-	printf("after bridging ... \n");
-	for(int i = 0; i < bd->fragments.size(); i++)
-	{
-		bd->fragments[i].print(i);
+		
+		printf("after bridging ... \n");
+		for(int i = 0; i < bd->fragments.size(); i++)
+		{
+			bd->fragments[i].print(i);
+		}
+		printf("===\n");
 	}
-	printf("===\n");
-	*/
 
 	return 0;
 }
@@ -806,11 +807,13 @@ int bridger::bridge_tough_fragments()
 			vector<int> pn = trace_back(k1, k2, trace);
 			vector<int> pb = get_bridge(pn, fc.v1, fc.v2);
 
-			printf("pn = ( ");
-			printv(pn);
-			printf("), pb = ( ");
-			printv(pb);
-			printf(")\n");
+			if(print_output == true) {
+				printf("pn = ( ");
+				printv(pn);
+				printf("), pb = ( ");
+				printv(pb);
+				printf(")\n");
+			}
 
 			for(int j = 0; j < fc.fset.size(); j++)
 			{
@@ -1689,27 +1692,30 @@ vector<int> bridger::get_bridged_fragments_type()
 
 int bridger::print()
 {
-	int n = 0;
-	/*
-	for(int k = 0; k < fclusters.size(); k++)
-	{
-		n += fclusters[k].fset.size();
+	if(print_output == true) {
+		int n = 0;
+		/*
+		for(int k = 0; k < fclusters.size(); k++)
+		{
+			n += fclusters[k].fset.size();
+		}
+		printf("#fragments = %lu, #open-fragments = %d, #fclusters = %lu\n", bd->fragments.size(), n, fclusters.size());
+		*/
+
+		for(int k = 0; k < bd->fragments.size(); k++)
+		{
+			if(bd->fragments[k].paths.size() == 1) n++;
+		}
+
+		int total = bd->fragments.size();
+		int remain = total - n;
+		double ratio = n * 100.0 / total;
+
+		printf("#fragments = %d, #fixed = %d, #remain = %d, ratio = %.1lf, length = (%d, %d, %d)\n", total, n, remain, ratio, length_low, length_median, length_high);
+
+		//for(int k = 0; k < fclusters.size(); k++) fclusters[k].print(k);
 	}
-	printf("#fragments = %lu, #open-fragments = %d, #fclusters = %lu\n", bd->fragments.size(), n, fclusters.size());
-	*/
-
-	for(int k = 0; k < bd->fragments.size(); k++)
-	{
-		if(bd->fragments[k].paths.size() == 1) n++;
-	}
-
-	int total = bd->fragments.size();
-	int remain = total - n;
-	double ratio = n * 100.0 / total;
-
-	printf("#fragments = %d, #fixed = %d, #remain = %d, ratio = %.1lf, length = (%d, %d, %d)\n", total, n, remain, ratio, length_low, length_median, length_high);
-
-	//for(int k = 0; k < fclusters.size(); k++) fclusters[k].print(k);
+	
 	return 0;
 }
 

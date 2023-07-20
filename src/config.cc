@@ -99,6 +99,7 @@ string output_file1;
 
 // for controling
 bool output_tex_files = false;
+bool print_output = true;
 string fixed_gene_name = "";
 int batch_bundle_size = 100;
 int verbose = 1;
@@ -113,6 +114,10 @@ int parse_arguments(int argc, const char ** argv)
 		if(string(argv[i]) == "-i")
 		{
 			input_file = string(argv[i + 1]);
+			i++;
+		}
+		else if(string(argv[i]) == "--no-print") {
+			print_output = false;
 			i++;
 		}
 		else if(string(argv[i]) == "-o")

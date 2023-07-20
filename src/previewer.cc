@@ -127,11 +127,11 @@ int previewer::solve_strandness()
 	if(sp >= min_preview_spliced_reads && first > preview_infer_ratio * 2.0 * sp) s1 = FR_FIRST;
 	if(sp >= min_preview_spliced_reads && second > preview_infer_ratio * 2.0 * sp) s1 = FR_SECOND;
 
-	// if(verbose >= 1)
-	// {
-	// 	printf("preview strandness: sampled reads = %d, single = %d, paired = %d, first = %d, second = %d, inferred = %s, given = %s\n",
-	// 		total, single, paired, first, second, vv[s1 + 1].c_str(), vv[library_type + 1].c_str());
-	// }
+	if(print_output && verbose >= 1)
+	{
+		printf("preview strandness: sampled reads = %d, single = %d, paired = %d, first = %d, second = %d, inferred = %s, given = %s\n",
+			total, single, paired, first, second, vv[s1 + 1].c_str(), vv[library_type + 1].c_str());
+	}
 
 	if(library_type == EMPTY) library_type = s1;
 
@@ -234,11 +234,11 @@ int previewer::solve_insertsize()
 		n += it->second;
 	}
 
-	// if(verbose >= 1)
-	// {
-	// 	printf("preview insertsize: sampled reads = %d, isize = %.2lf +/- %.2lf, median = %d, low = %d, high = %d\n", 
-	// 			total, insertsize_ave, insertsize_std, insertsize_median, insertsize_low, insertsize_high);
-	// }
+	if(print_output && verbose >= 1)
+	{
+		printf("preview insertsize: sampled reads = %d, isize = %.2lf +/- %.2lf, median = %d, low = %d, high = %d\n", 
+				total, insertsize_ave, insertsize_std, insertsize_median, insertsize_low, insertsize_high);
+	}
 
 	for(int i = 0; i < insertsize_profile.size(); i++)
 	{
